@@ -1,29 +1,52 @@
+#ifndef _BINARY_TREES_H_
+#define _BINARY_TREES_H_
+
+/* * The recursive `#include "binary_trees.h"` line that was here
+ * has been removed to fix the compilation error.
+ */
+
+#include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "binary_trees.h"
+#include <string.h>
 
 /**
- * main - Entry point
+ * struct binary_tree_s - Binary tree node
  *
- * Return: Always 0 (Success)
+ * @n: Integer stored in the node
+ * @parent: Pointer to the parent node
+ * @left: Pointer to the left child node
+ * @right: Pointer to the right child node
  */
-int main(void)
+struct binary_tree_s
 {
-    binary_tree_t *root;
-    size_t height;
+	int n;
+	struct binary_tree_s *parent;
+	struct binary_tree_s *left;
+	struct binary_tree_s *right;
+};
 
-    root = binary_tree_node(NULL, 98);
-    root->left = binary_tree_node(root, 12);
-    root->right = binary_tree_node(root, 402);
-    binary_tree_insert_right(root->left, 54);
-    binary_tree_insert_right(root, 128);
-    binary_tree_print(root);
+typedef struct binary_tree_s binary_tree_t;
 
-    height = binary_tree_height(root);
-    printf("Height from %d: %lu\n", root->n, height);
-    height = binary_tree_height(root->right);
-    printf("Height from %d: %lu\n", root->right->n, height);
-    height = binary_tree_height(root->left->right);
-    printf("Height from %d: %lu\n", root->left->right->n, height);
-    return (0);
-}
+/* Typedefs for other tree types */
+typedef struct binary_tree_s bst_t;
+typedef struct binary_tree_s avl_t;
+typedef struct binary_tree_s heap_t;
+
+/* --- Provided Print Function --- */
+void binary_tree_print(const binary_tree_t *);
+
+/* --- Task Prototypes --- */
+binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);
+binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value);
+binary_tree_t *binary_tree_insert_right(binary_tree_t *parent, int value);
+void binary_tree_delete(binary_tree_t *tree);
+int binary_tree_is_leaf(const binary_tree_t *node);
+int binary_tree_is_root(const binary_tree_t *node);
+void binary_tree_preorder(const binary_tree_t *tree, void (*func)(int));
+void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int));
+void binary_tree_postorder(const binary_tree_t *tree, void (*func)(int));
+size_t binary_tree_height(const binary_tree_t *tree);
+
+#endif /* _BINARY_TREES_H_ */
+

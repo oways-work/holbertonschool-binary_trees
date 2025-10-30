@@ -13,7 +13,7 @@
 void binary_tree_postorder(const binary_tree_t *tree, void (*func)(int))
 {
 	if (tree == NULL || func == NULL)
-		return;
+	return;
 
 	/* 1. Traverse the left subtree */
 	binary_tree_postorder(tree->left, func);
@@ -24,4 +24,3 @@ void binary_tree_postorder(const binary_tree_t *tree, void (*func)(int))
 	/* 3. Visit the root node */
 	func(tree->n);
 }
-

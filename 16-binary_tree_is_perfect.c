@@ -1,12 +1,13 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_height - Measures the height of a binary tree.
+ * get_tree_height - Measures the height of a binary tree for perfect check.
  * @tree: A pointer to the root node of the tree to measure the height.
  *
  * Return: The height of the tree. If tree is NULL, return 0.
+ * Note: This is a static helper for binary_tree_is_perfect
  */
-static size_t binary_tree_height(const binary_tree_t *tree)
+static size_t get_tree_height(const binary_tree_t *tree)
 {
 	size_t left_h;
 	size_t right_h;
@@ -16,8 +17,8 @@ static size_t binary_tree_height(const binary_tree_t *tree)
 		return (0);
 
 	/* Recursively find the height of the left and right subtrees */
-	left_h = binary_tree_height(tree->left);
-	right_h = binary_tree_height(tree->right);
+	left_h = get_tree_height(tree->left);
+	right_h = get_tree_height(tree->right);
 
 	/* The height of the current node is 1 + the max of its children's heights */
 	if (left_h > right_h)
@@ -41,9 +42,9 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 	if (tree == NULL)
 		return (0);
 
-	/* Get the height of the left and right subtrees */
-	left_h = binary_tree_height(tree->left);
-	right_h = binary_tree_height(tree->right);
+	/* Get the height of the left and right subtrees using the helper */
+	left_h = get_tree_height(tree->left);
+	right_h = get_tree_height(tree->right);
 
 	/*
 	 * Case 1: This is a leaf node.
@@ -71,3 +72,4 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 	 */
 	return (0);
 }
+

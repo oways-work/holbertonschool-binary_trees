@@ -1,35 +1,27 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "binary_trees.h"
 
 /**
- * print_num - Prints a number
+ * binary_tree_inorder - Goes through a binary tree using in-order traversal
  *
- * @n: Number to be printed
+ * @tree: Pointer to the root node of the tree to traverse
+ * @func: Pointer to a function to call for each node.
+ * The value in the node must be passed as a parameter to this function.
+ *
+ * Description: If @tree or @func is NULL, do nothing.
+ * Traversal order: Left -> Root -> Right
  */
-void print_num(int n)
+void binary_tree_inorder(const binary_tree_t *tree, void (*func)(int))
 {
-    printf("%d\n", n);
+	if (tree == NULL || func == NULL)
+		return;
+
+	/* 1. Traverse the left subtree */
+	binary_tree_inorder(tree->left, func);
+
+	/* 2. Visit the root node */
+	func(tree->n);
+
+	/* 3. Traverse the right subtree */
+	binary_tree_inorder(tree->right, func);
 }
 
-/**
- * main - Entry point
- *
- * Return: Always 0 (Success)
- */
-int main(void)
-{
-    binary_tree_t *root;
-
-    root = binary_tree_node(NULL, 98);
-    root->left = binary_tree_node(root, 12);
-    root->right = binary_tree_node(root, 402);
-    root->left->left = binary_tree_node(root->left, 6);
-    root->left->right = binary_tree_node(root->left, 56);
-    root->right->left = binary_tree_node(root->right, 256);
-    root->right->right = binary_tree_node(root->right, 512);
-
-    binary_tree_print(root);
-    binary_tree_inorder(root, &print_num);
-    return 0;
-}
